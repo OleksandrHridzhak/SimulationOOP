@@ -16,6 +16,7 @@ namespace SimulationOOP
     }
     private void pictureBox1_Click(object sender, EventArgs e)
     {
+
     }
 
 
@@ -47,13 +48,14 @@ namespace SimulationOOP
         meduzas.Add(new Meduza(x, y, color, speed, pictureBox1.Width, pictureBox1.Height));
       }
 
-
+      Ulva ulva = new Ulva(120, pictureBox1.Height - 20, Color.Green);
       timer = new Timer();
       timer.Interval = 60;
       timer.Tick += (s, ev) =>
       {
         foreach (var fish in fishes)
         {
+
           fish.Move(pictureBox1.Width, pictureBox1.Height);
         }
         foreach (var meduza in meduzas)
@@ -63,6 +65,7 @@ namespace SimulationOOP
         pictureBox1.Invalidate();
       };
       timer.Start();
+      
 
       pictureBox1.Paint += (s, ev) =>
       {
@@ -74,11 +77,33 @@ namespace SimulationOOP
         {
           meduza.Draw(ev.Graphics);
         }
+        ulva.Draw(ev.Graphics);
       };
+
     }
 
     private void label1_Click(object sender, EventArgs e)
     {
+
+    }
+
+    private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
+    {
+      int mouseX = e.X;
+      int mouseY = e.Y;
+
+      foreach (var fish in fishes)
+      {
+        int width = fish.Shape.GetLength(1) * 3;
+        int height = fish.Shape.GetLength(0) * 3;
+
+        if (mouseX >= fish.X && mouseX <= fish.X + width &&
+            mouseY >= fish.Y && mouseY <= fish.Y + height)
+        {
+          MessageBox.Show(fish.GetInfo());
+          break;
+        }
+      }
 
     }
   }

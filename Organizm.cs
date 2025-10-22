@@ -21,7 +21,7 @@ namespace SimulationOOP
         Color = color;
         Shape = shape;
       }
-    public abstract string getInfo();
+    public abstract string GetInfo();
 
     public void Draw(Graphics g)
       {

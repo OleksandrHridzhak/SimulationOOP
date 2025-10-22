@@ -9,20 +9,42 @@ namespace SimulationOOP
 {
   public abstract class Creature : Organizm
   {
-    public double Speed { get; set; }
+    private double speed;
+    public double Speed {
+      get
+      {
+        return speed;
+      }
+      
+      private set
+      {
+        if (value < 0)
+          speed = 1;
+        else
+          speed = value;
+      }
+
+    }
+    public void setSpeed(double newSpeed)
+    {
+      Speed = newSpeed;
+    }
     public double Direction { get; set; }
     public int maxWidth { get; set; }
     public int maxHeight { get; set; }
     public static Random rnd = new Random();
-    public Creature(double x, double y, Color color, bool[,] shape, double speed, int maxWidth, int maxHeight)
+    public Creature(double x, double y, Color color, bool[,] shape, double initSpeed, int maxWidth, int maxHeight)
       : base(x, y, color, shape)
     {
-      Speed = speed;
+      Speed = initSpeed;
       Direction = rnd.Next(0, 360);
       this.maxWidth = maxWidth;
       this.maxHeight = maxHeight;
     }
-
+    public override string GetInfo()
+    {
+      return "This is a creature";
+    }
     public void Move(int maxWidth, int maxHeight)
     {
       Direction += rnd.NextDouble() * 6 ;

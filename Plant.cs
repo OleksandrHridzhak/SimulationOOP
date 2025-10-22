@@ -9,16 +9,11 @@ namespace SimulationOOP
 {
   public class Plant : Organizm
   {
-    public static readonly bool[,] DeafultShape =
+    public override string GetInfo()
     {
-      { false, false, true,  false, false, false },
-      { false, true,  true,  true,  false, false },
-      { false, true,  true,  true,  true,  false },
-      { true,  true,  false, true,  true,  false },
-      { false, true,  true,  true,  true,  false },
-      { true,  true,  true,  true,  true,  true } 
-    };
+      return "This is a plant.";
+    }
     public Plant(double x, double y, Color color, bool[,] shape)
-      : base(x, y, color, DeafultShape) { }
+      : base(x, y, color, shape) { }
   }
 }

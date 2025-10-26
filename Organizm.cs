@@ -25,7 +25,7 @@ namespace SimulationOOP
 
     public void Draw(Graphics g)
       {
-        int cellSize = 3;
+        int cellSize = 5;
 
         for (int i = 0; i < Shape.GetLength(0); i++)
         {

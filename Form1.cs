@@ -20,9 +20,8 @@ namespace SimulationOOP
     }
 
 
-    List<Fish> fishes = new List<Fish>();
-    List<Meduza> meduzas = new List<Meduza> ();
-
+    List<Creature>creatures = new List<Creature>();
+    List<Plant> plants = new List<Plant>();
     Random rnd = new Random();
 
     private void Form1_Load(object sender, EventArgs e)
@@ -33,34 +32,32 @@ namespace SimulationOOP
 
       for (int i = 0; i < 30; i++)
       {
-        float x = rnd.Next(0, pictureBox1.Width);
-        float y = rnd.Next(0, pictureBox1.Height);
+        double x = rnd.Next(0, pictureBox1.Width);
+        double y = rnd.Next(0, pictureBox1.Height);
         Color color = colors[rnd.Next(colors.Length)];
-        float speed = (float)(rnd.NextDouble() * 3 + 1); 
-        fishes.Add(new Fish(x, y, color, speed, pictureBox1.Width, pictureBox1.Height));
+        double speed = rnd.NextDouble() * 3 + 1; 
+        creatures.Add(new Fish(x, y, color, speed, pictureBox1.Width, pictureBox1.Height));
+
+        x = rnd.Next(0, pictureBox1.Width);
+        y = rnd.Next(0, pictureBox1.Height);
+        color = meduzaColors[rnd.Next(meduzaColors.Length)];
+        speed = rnd.NextDouble() * 3 + 1;
+        creatures.Add(new Meduza(x, y, color, speed, pictureBox1.Width, pictureBox1.Height));
+
+        color  = plantColors[rnd.Next(plantColors.Length)];
+        plants.Add(new Ulva(rnd.Next(0, pictureBox1.Width), pictureBox1.Height - 20,color));
       }
-      for (int i = 0; i < 30; i++)
-      {
-        float x = rnd.Next(0, pictureBox1.Width);
-        float y = rnd.Next(0, pictureBox1.Height);
-        Color color = meduzaColors[rnd.Next(meduzaColors.Length)];
-        float speed = (float)(rnd.NextDouble() * 3 + 1);
-        meduzas.Add(new Meduza(x, y, color, speed, pictureBox1.Width, pictureBox1.Height));
-      }
+
 
       Ulva ulva = new Ulva(120, pictureBox1.Height - 20, Color.Green);
       timer = new Timer();
       timer.Interval = 60;
       timer.Tick += (s, ev) =>
       {
-        foreach (var fish in fishes)
+        foreach (var creature in creatures)
         {
 
-          fish.Move(pictureBox1.Width, pictureBox1.Height);
-        }
-        foreach (var meduza in meduzas)
-        {
-          meduza.Move(pictureBox1.Width, pictureBox1.Height);
+          creature.Move(pictureBox1.Width, pictureBox1.Height);
         }
         pictureBox1.Invalidate();
       };
@@ -69,15 +66,14 @@ namespace SimulationOOP
 
       pictureBox1.Paint += (s, ev) =>
       {
-        foreach (var fish in fishes)
+        foreach (var creature in creatures)
         {
-          fish.Draw(ev.Graphics);
+          creature.Draw(ev.Graphics);
         }
-        foreach (var meduza in meduzas)
+        foreach (var plant in plants)
         {
-          meduza.Draw(ev.Graphics);
+          plant.Draw(ev.Graphics);
         }
-        ulva.Draw(ev.Graphics);
       };
 
     }
@@ -92,19 +88,33 @@ namespace SimulationOOP
       int mouseX = e.X;
       int mouseY = e.Y;
 
-      foreach (var fish in fishes)
+      foreach (var creature in creatures)
       {
-        int width = fish.Shape.GetLength(1) * 3;
-        int height = fish.Shape.GetLength(0) * 3;
+        int width = creature.Shape.GetLength(1) * 5;
+        int height = creature.Shape.GetLength(0) * 5;
 
-        if (mouseX >= fish.X && mouseX <= fish.X + width &&
-            mouseY >= fish.Y && mouseY <= fish.Y + height)
+        if (mouseX >= creature.X && mouseX <= creature.X + width &&
+            mouseY >= creature.Y && mouseY <= creature.Y + height)
         {
-          MessageBox.Show(fish.GetInfo());
+          creature.setSpeed(creature.Speed + 10);
+          MessageBox.Show(creature.GetInfo());
           break;
         }
       }
+      foreach (var plant in plants)
+      {
+        int wight = plant.Shape.GetLength(1) * 5;
+        int height = plant.Shape.GetLength(0) * 5;
 
+        if (mouseX >= plant.X && mouseX <= plant.X + wight &&
+            mouseY >= plant.Y && mouseY <= plant.Y + height)
+        {
+          MessageBox.Show(plant.GetInfo());
+          break;
+        }
+
+
+      }
     }
   }
 }

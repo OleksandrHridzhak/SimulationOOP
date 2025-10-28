@@ -7,16 +7,20 @@ using System.Threading.Tasks;
 
 namespace SimulationOOP
 {
+  // Базовий клас для створінь (Зробив його абстрактним для того, щоб заборонити стоврення обєктів від  нього напряму)
   public abstract class Creature : Organizm
   {
+    // Реалізація інкапслуції на прикладі швикдкостііі
+    // Приватне поле для зберігання швидкості
     private double speed;
+    // Публічне властивість для доступу до швидкості з перевіркою
     public double Speed {
       get
       {
         return speed;
       }
-      
-      private set
+      //  сеттер з перевіркою на відємні значення
+      set
       {
         if (value < 0)
           speed = 1;
@@ -25,14 +29,14 @@ namespace SimulationOOP
       }
 
     }
-    public void setSpeed(double newSpeed)
-    {
-      Speed = newSpeed;
-    }
+    // Публічні властивісті для напрямку руху та меж екрану
     public double Direction { get; set; }
     public int maxWidth { get; set; }
     public int maxHeight { get; set; }
+
+    // Статичне поле для генерації випадкових чисел
     public static Random rnd = new Random();
+    // Конструктор класу Creature
     public Creature(double x, double y, Color color, bool[,] shape, double initSpeed, int maxWidth, int maxHeight)
       : base(x, y, color, shape)
     {
@@ -41,10 +45,22 @@ namespace SimulationOOP
       this.maxWidth = maxWidth;
       this.maxHeight = maxHeight;
     }
+    // Реалізація абстрактного методу з батьківського класу
     public override string GetInfo()
     {
       return "This is a creature";
     }
+
+
+
+
+
+    // Метод для руху створіння
+    //==================================================================
+    //===================================================================
+    // !!ALARM!! (Прошу не задавати питання як це працює, бо я не розумію)
+    //===================================================================
+    //==================================================================
     public void Move(int maxWidth, int maxHeight)
     {
       Direction += rnd.NextDouble() * 6 ;

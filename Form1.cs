@@ -118,7 +118,7 @@ namespace SimulationOOP
             mouseY >= creature.Y && mouseY <= creature.Y + height)
         {
           // Збільшуємо швидкість створіння на 10 одиниць
-          creature.setSpeed(creature.Speed + 10);
+          creature.Speed += 10;
           MessageBox.Show(creature.GetInfo());
           break;
         }
